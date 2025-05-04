@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تَدْرِيبُ الاِسْتِمَاع 🌟 Latihan Mendengarkan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #FFD460;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #FF6B6B;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #4ECDC4;
+            font-size: 1.8em;
+        }
+        
+        .game-area {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #F9F7F7;
+            border-radius: 15px;
+        }
+        
+        .audio-player {
+            width: 200px;
+            height: 200px;
+            margin: 10px auto;
+            border-radius: 15px;
+            border: 3px solid #4ECDC4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-color: #f5f5f5;
+        }
+        
+        .audio-icon {
+            font-size: 80px;
+            color: #4ECDC4;
+        }
+        
+        .audio-player:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .audio-player:active {
+            transform: scale(0.98);
+        }
+        
+        .sentence-display {
+            font-size: 1.8em;
+            margin: 15px 0;
+            color: #1A535C;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+        
+        textarea {
+            width: 80%;
+            padding: 12px;
+            font-size: 1.2em;
+            text-align: right;
+            direction: rtl;
+            border: 2px solid #4ECDC4;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: 'Tajawal', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        button {
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background-color: #FF5252;
+        }
+        
+        .feedback {
+            font-size: 1.2em;
+            margin: 15px 0;
+            min-height: 30px;
+            color: #1A535C;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #4ECDC4;
+            border-radius: 15px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .score {
+            font-size: 1.2em;
+            color: #1A535C;
+            margin: 10px 0;
+        }
+        
+        .stars {
+            font-size: 1.5em;
+            margin: 15px 0;
+            color: #FFD700;
+        }
+
+        .arabic-keyboard {
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            direction: rtl;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .key {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            background-color: #F9F7F7;
+            border: 1px solid #4ECDC4;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        
+        .key:hover {
+            background-color: #4ECDC4;
+            color: white;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            .audio-player {
+                width: 150px;
+                height: 150px;
+            }
+            
+            textarea {
+                width: 90%;
+            }
+            
+            .key {
+                width: 35px;
+                height: 35px;
+                font-size: 1em;
+            }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .level-indicator {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .level {
+            width: 15px;
+            height: 15px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        
+        .level.active {
+            background-color: #FF6B6B;
+        }
+        
+        .hint-button {
+            background-color: #4ECDC4;
+            font-size: 1em;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        /* Sound Indicator */
+        .sound-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .audio-container {
+            position: relative;
+            width: 200px;
+            margin: 0 auto;
+        }
+        
+        .replay-count {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .reveal-text {
+            background-color: #4ECDC4;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        
+        .sentence-translation {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #555555;
+            font-style: italic;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تَدْرِيبُ الاِسْتِمَاع 🌟 Latihan Mendengarkan</h1>
+        <h2>تعلم الاستماع باللغة العربية</h2>
+        <div class="level-indicator">
+            <div class="level active"></div>
+            <div class="level"></div>
+            <div class="level"></div>
+        </div>
+        <div class="game-area">
+            <div class="audio-container">
+                <div id="audioPlayer" class="audio-player">
+                    <div class="audio-icon">🔊</div>
+                </div>
+                <div id="soundIndicator" class="sound-indicator">🔊</div>
+                <div id="replayCount" class="replay-count">Pemutaran: 0/3</div>
+            </div>
+            <div id="sentenceDisplay" class="sentence-display"></div>
+            <div id="sentenceTranslation" class="sentence-translation" style="display: none;"></div>
+            
+            <textarea id="userInput" placeholder="اكتب ما تسمع (Tuliskan apa yang kamu dengar)" dir="rtl" rows="3"></textarea>
+            <div class="arabic-keyboard" id="arabicKeyboard"></div>
+            
+            <div id="feedback" class="feedback"></div>
+            <button id="revealButton" class="reveal-text" style="display: none;">Tampilkan Teks</button>
+            <button id="checkButton">Periksa</button>
+            <button id="hintButton" class="hint-button">Petunjuk</button>
+            <button id="nextButton" style="display: none;">Selanjutnya</button>
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="score" class="score">Skor: 0</div>
+            <div id="stars" class="stars"></div>
+        </div>
+    </div>
+
+    <div id="congratsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Selamat! 🎉</h2>
+            <p>Kamu telah menyelesaikan permainan ini dengan baik!</p>
+            <div id="finalScore" class="score">Skor Akhir: 0</div>
+            <div id="finalStars" class="stars"></div>
+            <button id="playAgainButton">Main Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        const sentences = [
+            // Level 1: Kalimat sederhana
+            { 
+                arabic: "أَنَا أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ.", 
+                indonesian: "Saya pergi ke sekolah setiap hari.",
+                hint: "Kalimat tentang kegiatan sehari-hari ke tempat belajar",
+                audio: null // Akan dibuat dengan speechSynthesis
+            },
+            { 
+                arabic: "أَيْنَ مَكْتَبَةُ الْجَامِعَةِ؟", 
+                indonesian: "Di mana perpustakaan universitas?",
+                hint: "Kalimat tanya tentang lokasi tempat membaca buku",
+                audio: null
+            },
+            { 
+                arabic: "أُحِبُّ قِرَاءَةَ الْكُتُبِ كَثِيرًا.", 
+                indonesian: "Saya sangat suka membaca buku.",
+                hint: "Kalimat tentang hobi membaca",
+                audio: null
+            },
+            { 
+                arabic: "هَلْ تَتَكَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ؟", 
+                indonesian: "Apakah kamu berbicara bahasa Arab?",
+                hint: "Kalimat tanya tentang kemampuan berbahasa",
+                audio: null
+            },
+            { 
+                arabic: "السَّاعَةُ الْآنَ الثَّامِنَةُ صَبَاحًا.", 
+                indonesian: "Sekarang jam delapan pagi.",
+                hint: "Kalimat tentang waktu di pagi hari",
+                audio: null
+            },
+            
+            // Level 2: Kalimat menengah
+            { 
+                arabic: "أَنَا أَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ لِأَنَّهَا جَمِيلَةٌ.", 
+                indonesian: "Saya belajar bahasa Arab karena bahasanya indah.",
+                hint: "Kalimat tentang alasan mempelajari sebuah bahasa",
+                audio: null
+            },
+            { 
+                arabic: "عِنْدَمَا تَذْهَبُ إِلَى السُّوقِ، اِشْتَرِ بَعْضَ الْفَوَاكِهِ.", 
+                indonesian: "Ketika kamu pergi ke pasar, belilah beberapa buah.",
+                hint: "Kalimat perintah tentang berbelanja makanan sehat",
+                audio: null
+            },
+            { 
+                arabic: "سَأُسَافِرُ إِلَى مَكَّةَ فِي الشَّهْرِ الْقَادِمِ.", 
+                indonesian: "Saya akan pergi ke Mekkah bulan depan.",
+                hint: "Kalimat tentang rencana perjalanan ke kota suci",
+                audio: null
+            },
+            { 
+                arabic: "يَجِبُ عَلَيْنَا أَنْ نَتَعَلَّمَ مِنْ أَخْطَائِنَا.", 
+                indonesian: "Kita harus belajar dari kesalahan kita.",
+                hint: "Kalimat tentang belajar dari pengalaman",
+                audio: null
+            },
+            { 
+                arabic: "تَنَاوَلْتُ الْفُطُورَ مَعَ عَائِلَتِي هَذَا الصَّبَاحِ.", 
+                indonesian: "Saya sarapan bersama keluarga saya pagi ini.",
+                hint: "Kalimat tentang kegiatan makan di pagi hari",
+                audio: null
+            },
+            
+            // Level 3: Kalimat kompleks
+            { 
+                arabic: "عَلَى الرَّغْمِ مِنْ صُعُوبَةِ تَعَلُّمِ اللُّغَةِ الْعَرَبِيَّةِ، فَإِنَّهَا مُمْتِعَةٌ جِدًّا.", 
+                indonesian: "Meskipun sulit belajar bahasa Arab, itu sangat menyenangkan.",
+                hint: "Kalimat tentang tantangan dan kesenangan dalam belajar bahasa",
+                audio: null
+            },
+            { 
+                arabic: "كُلَّمَا قَرَأْتُ كِتَابًا جَدِيدًا، اكْتَسَبْتُ مَعْرِفَةً جَدِيدَةً.", 
+                indonesian: "Setiap kali saya membaca buku baru, saya mendapatkan pengetahuan baru.",
+                hint: "Kalimat tentang manfaat membaca buku",
+                audio: null
+            },
+            { 
+                arabic: "يُقَالُ إِنَّ السَّفَرَ يُوَسِّعُ آفَاقَ الإِنْسَانِ وَيُنَمِّي مَعَارِفَهُ.", 
+                indonesian: "Dikatakan bahwa bepergian memperluas wawasan seseorang dan mengembangkan pengetahuannya.",
+                hint: "Kalimat tentang manfaat melakukan perjalanan",
+                audio: null
+            },
+            { 
+                arabic: "يَنْبَغِي عَلَيْنَا أَنْ نَحْتَرِمَ آرَاءَ الْآخَرِينَ حَتَّى لَوْ كُنَّا لَا نَتَّفِقُ مَعَهُمْ.", 
+                indonesian: "Kita harus menghormati pendapat orang lain meskipun kita tidak setuju dengan mereka.",
+                hint: "Kalimat tentang menghargai perbedaan pendapat",
+                audio: null
+            },
+            { 
+                arabic: "إِذَا كُنْتَ تُرِيدُ أَنْ تَنْجَحَ فِي حَيَاتِكَ، عَلَيْكَ أَنْ تَعْمَلَ بِجِدٍّ وَاجْتِهَادٍ.", 
+                indonesian: "Jika kamu ingin sukses dalam hidupmu, kamu harus bekerja keras dan rajin.",
+                hint: "Kalimat tentang kunci kesuksesan dalam hidup",
+                audio: null
+            }
+        ];
+
+        const arabicCharacters = [
+            'ا', 'أ', 'إ', 'آ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 
+            'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي', 'ء', 
+            'ؤ', 'ئ', 'ة', 'َ', 'ُ', 'ِ', 'ّ', 'ْ', 'ً', 'ٌ', 'ٍ', '؟', '،', '.'
+        ];
+
+        let currentLevel = 1;
+        let currentSentenceIndex = 0;
+        let score = 0;
+        let attempts = 0;
+        let replayCount = 0;
+        let maxReplays = 3;
+        let sentenceRevealed = false;
+
+        // Elements
+        const audioPlayer = document.getElementById('audioPlayer');
+        const sentenceDisplay = document.getElementById('sentenceDisplay');
+        const sentenceTranslation = document.getElementById('sentenceTranslation');
+        const userInput = document.getElementById('userInput');
+        const feedbackElement = document.getElementById('feedback');
+        const checkButton = document.getElementById('checkButton');
+        const nextButton = document.getElementById('nextButton');
+        const hintButton = document.getElementById('hintButton');
+        const revealButton = document.getElementById('revealButton');
+        const progressBar = document.getElementById('progressBar');
+        const scoreElement = document.getElementById('score');
+        const starsElement = document.getElementById('stars');
+        const arabicKeyboard = document.getElementById('arabicKeyboard');
+        const congratsModal = document.getElementById('congratsModal');
+        const finalScore = document.getElementById('finalScore');
+        const finalStars = document.getElementById('finalStars');
+        const playAgainButton = document.getElementById('playAgainButton');
+        const closeModalButton = document.querySelector('.close');
+        const levelIndicators = document.querySelectorAll('.level');
+        const soundIndicator = document.getElementById('soundIndicator');
+        const replayCountElement = document.getElementById('replayCount');
+        
+        // Fungsi untuk memutar audio menggunakan Web Speech API
+        function playSentenceAudio() {
+            if (replayCount >= maxReplays) {
+                feedbackElement.textContent = "Batas pemutaran ulang tercapai. Gunakan petunjuk atau tampilkan teks.";
+                revealButton.style.display = 'inline-block';
+                return;
+            }
+            
+            const wordIndex = (currentLevel - 1) * 5 + currentSentenceIndex;
+            const sentence = sentences[wordIndex];
+            
+            // Gunakan Web Speech API untuk melafalkan teks Arab
+            const utterance = new SpeechSynthesisUtterance(sentence.arabic);
+            utterance.lang = 'ar-SA'; // Setel bahasa ke Arab (Saudi Arabia)
+            utterance.rate = 0.8; // Sedikit lebih lambat untuk kemudahan pemahaman
+            
+            // Putar audio
+            window.speechSynthesis.speak(utterance);
+            
+            // Increment replay counter
+            replayCount++;
+            replayCountElement.textContent = `Pemutaran: ${replayCount}/${maxReplays}`;
+            
+            // Tampilkan indikator suara
+            soundIndicator.style.opacity = '1';
+            soundIndicator.style.animation = 'pulse 0.8s ease-out';
+            
+            setTimeout(() => {
+                soundIndicator.style.opacity = '0';
+                soundIndicator.style.animation = 'none';
+            }, 800);
+            
+            // Jika sudah maksimal, tampilkan tombol "Tampilkan Teks"
+            if (replayCount >= maxReplays) {
+                revealButton.style.display = 'inline-block';
+            }
+        }
+        
+        // Buat keyboard Arab
+        function createArabicKeyboard() {
+            arabicKeyboard.innerHTML = '';
+            arabicCharacters.forEach(char => {
+                const key = document.createElement('div');
+                key.className = 'key';
+                key.textContent = char;
+                key.addEventListener('click', () => {
+                    userInput.value += char;
+                    userInput.focus();
+                });
+                arabicKeyboard.appendChild(key);
+            });
+        }
+
+        // Tampilkan kalimat berikutnya
+        function showNextSentence() {
+            if (currentSentenceIndex >= 5) {
+                if (currentLevel < 3) {
+                    currentLevel++;
+                    currentSentenceIndex = 0;
+                    updateLevelIndicator();
+                    showNextSentence();
+                } else {
+                    // End of game
+                    finalScore.textContent = `Skor Akhir: ${score}`;
+                    const starCount = Math.floor(score / 50);
+                    finalStars.textContent = '⭐'.repeat(starCount);
+                    congratsModal.style.display = 'block';
+                }
+                return;
+            }
+
+            const sentenceIndex = (currentLevel - 1) * 5 + currentSentenceIndex;
+            if (sentenceIndex >= sentences.length) {
+                // In case we run out of sentences
+                finalScore.textContent = `Skor Akhir: ${score}`;
+                const starCount = Math.floor(score / 50);
+                finalStars.textContent = '⭐'.repeat(starCount);
+                congratsModal.style.display = 'block';
+                return;
+            }
+            
+            const sentence = sentences[sentenceIndex];
+            
+            // Reset semua elemen UI
+            sentenceDisplay.textContent = "";
+            sentenceTranslation.textContent = sentence.indonesian;
+            sentenceTranslation.style.display = 'none';
+            userInput.value = '';
+            feedbackElement.textContent = '';
+            revealButton.style.display = 'none';
+            sentenceRevealed = false;
+            nextButton.style.display = 'none';
+            checkButton.style.display = 'inline-block';
+            
+            // Reset replay counter
+            replayCount = 0;
+            replayCountElement.textContent = `Pemutaran: ${replayCount}/${maxReplays}`;
+            
+            // Update progress bar
+            const progressPercentage = (currentSentenceIndex + (currentLevel - 1) * 5) / 15 * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            
+            // Putar audio otomatis saat awal
+            setTimeout(playSentenceAudio, 500);
+        }
+
+        // Periksa jawaban
+        function checkAnswer() {
+            const sentenceIndex = (currentLevel - 1) * 5 + currentSentenceIndex;
+            const correctAnswer = sentences[sentenceIndex].arabic;
+            let userAnswer = userInput.value.trim();
+            
+            // Normalisasi teks untuk perbandingan yang lebih adil
+            // Menghapus spasi berlebih dan normalisasi beberapa karakter Arab
+            function normalizeArabic(text) {
+                return text.replace(/\s+/g, ' ')  // Normalisasi spasi
+                          .replace(/[أإآ]/g, 'ا') // Normalisasi alif
+                          .replace(/[ىي]/g, 'ي') // Normalisasi ya
+                          .replace(/[ةه]/g, 'ه') // Normalisasi ta marbuta/ha
+                          .trim();
+            }
+            
+            const normalizedCorrect = normalizeArabic(correctAnswer);
+            const normalizedUser = normalizeArabic(userAnswer);
+            
+            // Hitung kesamaan dengan algoritma sederhana
+            function calculateSimilarity(str1, str2) {
+                // Mengukur persentase karakter yang sama di posisi yang sama
+                const longerStr = str1.length > str2.length ? str1 : str2;
+                const shorterStr = str1.length > str2.length ? str2 : str1;
+                let matches = 0;
+                
+                for (let i = 0; i < shorterStr.length; i++) {
+                    if (shorterStr[i] === longerStr[i]) {
+                        matches++;
+                    }
+                }
+                
+                return matches / longerStr.length;
+            }
+            
+            const similarity = calculateSimilarity(normalizedCorrect, normalizedUser);
+            
+            // Benar jika kesamaan di atas 90% atau jawaban persis sama
+            if (similarity > 0.9 || userAnswer === correctAnswer) {
+                feedbackElement.textContent = '✅ Benar! Hebat sekali!';
+                feedbackElement.style.color = '#4ECDC4';
+                
+                // Tampilkan teks yang benar dan terjemahannya
+                sentenceDisplay.textContent = correctAnswer;
+                sentenceTranslation.style.display = 'block';
+                
+                // Hitung skor (berdasarkan jumlah percobaan dan replay)
+                const replayPenalty = Math.floor(replayCount / 2); // Penalty untuk replay
+                score += Math.max(1, 10 - attempts - replayPenalty);
+                updateScoreDisplay();
+                
+                // Efek visual dan UI
+                    showConfetti();
+                      checkButton.style.display = 'none';
+                      nextButton.style.display = 'inline-block';
+                
+                // Reset untuk kalimat berikutnya
+                attempts = 0;
+            } else if (similarity > 0.7) {
+                // Hampir benar (70-90% sama)
+                feedbackElement.textContent = '⚠️ Hampir benar! Periksa lagi tulisanmu.';
+                feedbackElement.style.color = '#FFA500';
+                attempts++;
+            } else {
+                // Jauh dari benar (<70% sama)
+                feedbackElement.textContent = '❌ Coba lagi!';
+                feedbackElement.style.color = '#FF6B6B';
+                attempts++;
+                
+                // Tampilkan tombol "Tampilkan Teks" setelah beberapa percobaan
+                if (attempts >= 3) {
+                    revealButton.style.display = 'inline-block';
+                }
+            }
+        }
+
+        // Tampilkan petunjuk
+        function showHint() {
+            const sentenceIndex = (currentLevel - 1) * 5 + currentSentenceIndex;
+            const sentence = sentences[sentenceIndex];
+            
+            // Petunjuk berbeda berdasarkan level dan upaya
+            if (attempts < 2) {
+                // Petunjuk dasar
+                feedbackElement.textContent = `Petunjuk: ${sentence.hint}`;
+            } else {
+                // Petunjuk lebih detail untuk upaya selanjutnya
+                const words = sentence.arabic.split(' ');
+                const firstLetters = words.map(word => word.charAt(0)).join('... ');
+                feedbackElement.textContent = `Petunjuk: Kalimat dimulai dengan ${firstLetters}`;
+            }
+            
+            feedbackElement.style.color = '#1A535C';
+       }
+
+        // Tampilkan teks kalimat yang benar
+        function revealAnswer() {
+        const sentenceIndex = (currentLevel - 1) * 5 + currentSentenceIndex;
+        sentenceDisplay.textContent = sentences[sentenceIndex].arabic;
+        sentenceTranslation.style.display = 'block';
+        sentenceRevealed = true;
+        checkButton.style.display = 'none';
+        revealButton.style.display = 'none';
+        nextButton.style.display = 'inline-block';
+      }
+
+        // Update tampilan skor dan bintang
+        function updateScoreDisplay() {
+        scoreElement.textContent = `Skor: ${score}`;
+        const starCount = Math.floor(score / 20); // Ubah pembagi sesuai keinginan
+        starsElement.textContent = '⭐'.repeat(starCount);
+      }
+
+        // Efek confetti
+        function showConfetti() {
+        const duration = 1500;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, decay: 0.9, gravity: 1, particleCount: 50, origin: { y: 0.6 } };
+
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+              // @ts-ignore
+              confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3) } });
+              // @ts-ignore
+              confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9) } });
+          }, 250);
+        }
+
+         // Update indikator level
+         function updateLevelIndicator() {
+            levelIndicators.forEach((level, index) => {
+               if (index + 1 === currentLevel) {
+                 level.classList.add('active');
+                   } else {
+                     level.classList.remove('active');
+                }
+            });
+        }
+
+        // Inisialisasi permainan
+        function startGame() {
+            currentLevel = 1;
+            currentSentenceIndex = 0;
+            score = 0;
+            attempts = 0;
+            updateScoreDisplay();
+            updateLevelIndicator();
+            showNextSentence();
+        }
+
+        // Fungsi untuk memutar audio menggunakan Web Speech API
+function playSentenceAudio() {
+    if ('speechSynthesis' in window) {
+        if (replayCount >= maxReplays) {
+            feedbackElement.textContent = "Batas pemutaran ulang tercapai. Gunakan petunjuk atau tampilkan teks.";
+            revealButton.style.display = 'inline-block';
+            return;
+        }
+
+        const wordIndex = (currentLevel - 1) * 5 + currentSentenceIndex;
+        const sentence = sentences[wordIndex];
+
+        const utterance = new SpeechSynthesisUtterance(sentence.arabic);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.8;
+
+        // Tambahkan event handler untuk error (jika ada masalah saat sintesis)
+        utterance.onerror = function(event) {
+            console.error('Terjadi kesalahan saat memutar audio:', event);
+            feedbackElement.textContent = 'Maaf, terjadi masalah saat memutar suara.';
+        };
+
+        window.speechSynthesis.speak(utterance);
+
+        replayCount++;
+        replayCountElement.textContent = `Pemutaran: ${replayCount}/${maxReplays}`;
+
+        soundIndicator.style.opacity = '1';
+        soundIndicator.style.animation = 'pulse 0.8s ease-out';
+
+        setTimeout(() => {
+            soundIndicator.style.opacity = '0';
+            soundIndicator.style.animation = 'none';
+        }, 800);
+
+        if (replayCount >= maxReplays) {
+            revealButton.style.display = 'inline-block';
+        }
+    } else {
+        console.error('Web Speech API tidak didukung di browser ini.');
+        feedbackElement.textContent = 'Maaf, fitur suara tidak didukung di perangkat ini.';
+    }
+}
+
+        // Event listeners
+        audioPlayer.addEventListener('click', playSentenceAudio);
+        checkButton.addEventListener('click', checkAnswer);
+        nextButton.addEventListener('click', () => {
+          currentSentenceIndex++;
+          showNextSentence();
+        });
+        hintButton.addEventListener('click', showHint);
+        revealButton.addEventListener('click', revealAnswer);
+        playAgainButton.addEventListener('click', () => {
+          congratsModal.style.display = 'none';
+          startGame();
+        });
+        closeModalButton.addEventListener('click', () => {
+        congratsModal.style.display = 'none';
+        });
+        window.addEventListener('click', (event) => {
+          if (event.target === congratsModal) {
+            congratsModal.style.display = 'none';
+          }
+        });
+        userInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+            checkButton.click();
+          }
+        });
+
+        // Inisialisasi keyboard dan permainan saat halaman dimuat
+        createArabicKeyboard();
+        startGame();
+
+        // Tambahkan confetti script di akhir body
+            const scriptConfetti = document.createElement('script');
+            scriptConfetti.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+            document.body.appendChild(scriptConfetti);
+    </script>
+</body>
+</html>
